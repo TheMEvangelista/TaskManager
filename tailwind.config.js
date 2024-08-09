@@ -7,8 +7,19 @@ export default {
   theme: {
     extend: {
       colors:{
+        background: "#000814",
         primary: "#2B86FF",
         secondary: "#EF863E",
+      },
+      containers: {
+        center: true,
+        padding: {
+          DEFAULT: '1rem',
+          sm: '2rem',
+          lg: '4rem',
+          xl: '5rem',
+          '2xl': '6rem'
+        }
       }
     },
   },
