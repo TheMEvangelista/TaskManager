@@ -1,26 +1,24 @@
 require("dotenv").config();
 
-import express, { json } from "express";
-import cors from "cors";
-import { connectionString } from "./config.json";
+const express = require("express");
+const cors = require("cors");
+const config = require("./config.json");
+const mongoose = require("mongoose");
 
-import { connect } from "mongoose";
+mongoose.connect(config.connectionString);
 
-connect(connectionString);
+const User = require("./Models/user.model");
+const Note = require("./Models/note.model");
 
-import User, { findOne } from "./Models/user.model";
-import Note, { findOne as _findOne, find, deleteOne } from "./Models/note.model";
+const jwt = require("jsonwebtoken");
+const { authenticateToken } = require("./utilities");
 
 const app = express();
-
-import { sign } from "jsonwebtoken";
-import { authenticateToken } from "./utilities";
-
 app.use(json());
 app.use(
   cors({
     origin: "*",
-  })
+  }),
 );
 
 //Create account
@@ -60,7 +58,7 @@ app.post("/create-account", async (request, response) => {
 
   await user.save();
 
-  const accessToken = sign({ user }, process.env.ACESS_TOKEN_SECRET, {
+  const accessToken = jwt.sign({ user }, process.env.ACESS_TOKEN_SECRET, {
     expiresIn: "1h",
   });
 
@@ -255,7 +253,7 @@ app.delete(
         message: "Internal Server Error",
       });
     }
-  }
+  },
 );
 
 //Update isPinned Note
@@ -291,9 +289,9 @@ app.put(
         message: "Internal Server Error!",
       });
     }
-  }
+  },
 );
 
 app.listen(8000);
 
-export default app;
+module.exports = app;
