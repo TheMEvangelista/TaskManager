@@ -39,13 +39,8 @@ const Login = () => {
         navigate("/");
       }
     } catch (error) {
-
       //Handle login error
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
+      if (error.response && error.response.data.message) {
         setError(error.response.data.message);
       } else {
         setError("An unexpected error ocurred. Please try again.");
@@ -65,11 +60,11 @@ const Login = () => {
               placeholder="Email"
               className="input-box"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(event) => setEmail(event.target.value)}
             />
             <PasswordInput
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(event) => setPassword(event.target.value)}
             />
             {error && <p className="text-red-600 text-xs pb-1">{error}</p>}
             <button type="submit" className="primary-button">

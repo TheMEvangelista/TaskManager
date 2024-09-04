@@ -1,7 +1,5 @@
 require("dotenv").config();
 
-const express = require("express");
-const cors = require("cors");
 const config = require("./config.json");
 const mongoose = require("mongoose");
 
@@ -10,11 +8,15 @@ mongoose.connect(config.connectionString);
 const User = require("./Models/user.model");
 const Note = require("./Models/note.model");
 
+const express = require("express");
+const cors = require("cors");
+const app = express();
+
 const jwt = require("jsonwebtoken");
 const { authenticateToken } = require("./utilities");
 
-const app = express();
-app.use(json());
+app.use(express.json());
+
 app.use(
   cors({
     origin: "*",
@@ -41,7 +43,7 @@ app.post("/create-account", async (request, response) => {
       .json({ error: true, message: "Password is required!" });
   }
 
-  const isUser = await findOne({ email: email });
+  const isUser = await User.findOne({ email: email });
 
   if (isUser) {
     return response.json({
@@ -58,7 +60,7 @@ app.post("/create-account", async (request, response) => {
 
   await user.save();
 
-  const accessToken = jwt.sign({ user }, process.env.ACESS_TOKEN_SECRET, {
+  const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: "1h",
   });
 
@@ -79,14 +81,14 @@ app.post("/login", async (request, response) => {
     return response.status(400).json({ message: "Password is required!" });
   }
 
-  const userInfo = await findOne({ email: email });
+  const userInfo = await User.findOne({ email: email });
   if (!userInfo) {
     return response.status(400).json({ message: "User not found!" });
   }
   if (userInfo.email == email && userInfo.password == password) {
     const user = { user: userInfo };
-    const accessToken = sign(user, process.env.ACESS_TOKEN_SECRET, {
-      expiresIn: "1h",
+    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "24h",
     });
 
     return response.json({
@@ -107,7 +109,7 @@ app.post("/login", async (request, response) => {
 app.get("/get-user", authenticateToken, async (request, response) => {
   const { user } = request.user;
 
-  const isUser = await findOne({ _id: user._id });
+  const isUser = await User.findOne({ _id: user._id });
 
   if (!user) {
     return response.sendStatus(400);
@@ -178,7 +180,7 @@ app.put("/edit-note/:noteId", authenticateToken, async (request, response) => {
   }
 
   try {
-    const note = await _findOne({ _id: noteId, userId: user._id });
+    const note = await Note.findOne({ _id: noteId, userId: user._id });
 
     if (!note) {
       return response
@@ -210,7 +212,7 @@ app.get("/get-notes/", authenticateToken, async (request, response) => {
   const { user } = request.user;
 
   try {
-    const notes = await find({ userId: user._id }).sort({ isPinned: -1 });
+    const notes = await Note.find({ userId: user._id }).sort({ isPinned: -1 });
 
     return response.json({
       error: false,
@@ -234,7 +236,7 @@ app.delete(
     const { user } = request.user;
 
     try {
-      const note = await _findOne({ _id: noteId, userId: user._id });
+      const note = await Note.findOne({ _id: noteId, userId: user._id });
       if (!note) {
         return response
           .status(404)
@@ -266,7 +268,7 @@ app.put(
     const { user } = request.user;
 
     try {
-      const note = await _findOne({ _id: noteId, userId: user._id });
+      const note = await Note.findOne({ _id: noteId, userId: user._id });
 
       if (!note) {
         return response
