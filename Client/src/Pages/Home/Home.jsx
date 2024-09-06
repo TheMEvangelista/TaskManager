@@ -17,6 +17,8 @@ const Home = () => {
   const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
 
+  const name = { ...userInfo };
+
   //Get User Info
   const getUserInfo = async () => {
     try {
@@ -39,7 +41,7 @@ const Home = () => {
 
   return (
     <main>
-      {userInfo && <NavBar userInfo={userInfo} />}
+      <NavBar userInfo={name.fullName} />
 
       <section className="container mx-auto">
         <div className="grid grid-cols-3 gap-4 mt-8">
