@@ -13,7 +13,7 @@ const cors = require("cors");
 const app = express();
 
 const jwt = require("jsonwebtoken");
-const { authenticateToken } = require("./utilities");
+const { authenticateToken } = require("./autheticate");
 
 app.use(express.json());
 
