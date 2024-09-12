@@ -13,7 +13,7 @@ const NoteCard = ({
   onPinNote,
 }) => {
   return (
-    <section className="border rounded p-4 bg-gray-200 hover:shadow-xl transition-all ease-in-out">
+    <section className="shadow rounded-lg p-4 bg-gray-200 hover:shadow-xl transition-all ease-in-out">
 
       <div className="flex items-center justify-between">
         <div>
