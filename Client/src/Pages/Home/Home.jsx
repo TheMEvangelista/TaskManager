@@ -28,7 +28,7 @@ const Home = () => {
 
   const showToastMessage = (message, type) => {
     setToastMessage({
-      isShown: false,
+      isShown: true,
       message,
       type,
     });
@@ -100,7 +100,7 @@ const Home = () => {
         </div>
 
         <button
-          className="w-16 h-16 flex items-center justify-center rounded-3xl bg-primary hover:bg-blue-600 absolute right-10 bottom-10"
+          className="w-16 h-16 flex items-center justify-center rounded-full bg-primary hover:bg-blue-600 absolute right-10 bottom-10"
           onClick={() => {
             setOpenAddEditModal({ isShown: true, type: "add", data: null });
           }}>
@@ -112,7 +112,7 @@ const Home = () => {
           onRequestClose={() => {}}
           style={{
             overlay: {
-              backgroundColor: "rgba(0,0,0,0.2)",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
             },
           }}
           contentLabel=""
@@ -124,6 +124,7 @@ const Home = () => {
               setOpenAddEditModal({ isShown: false, type: "add", data: null });
             }}
             getNotes={getNotes}
+            showToastMessage={showToastMessage}
           />
         </Modal>
         <Toast
