@@ -22,7 +22,6 @@ const Home = () => {
 
   const [notes, setNotes] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
-  const name = { ...userInfo };
 
   const navigate = useNavigate();
 
@@ -80,11 +79,11 @@ const Home = () => {
 
   return (
     <main>
-      <NavBar userInfo={name.fullName} />
+      <NavBar userInfo={userInfo.fullName} />
 
       <section className="container mx-auto">
         <div className="grid grid-cols-3 gap-4 mt-8">
-          {notes.map((item, index) => (
+          {notes.map((item) => (
             <NoteCard
               key={item._id}
               title={item.title}
