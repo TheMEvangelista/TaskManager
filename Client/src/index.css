@@ -1,31 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Matemasie&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Matemasie&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base{
-    html{
-        font-family: "Anek Devanagari", "sans-serif";
-    }
-    body{
-        background-color: #fdfdfd;
-        overflow-x: hidden;
-    }
+@layer base {
+   html {
+      font-family: "Anek Devanagari", "sans-serif";
+   }
+   body {
+      background-color: #fdfdfd;
+      overflow-x: hidden;
+   }
 }
 
-@layer components{
-    .input-box{
-        @apply w-full text-sm bg-transparent border-2 px-5 py-3 rounded mb-4 outline-none;
-    }
-    .primary-button{
-        @apply w-full text-sm bg-primary text-white p-2 rounded my-1 hover:bg-blue-600;
-    }
-    .icon-button{
-        @apply text-xl text-slate-300 cursor-pointer hover:text-primary;
-    }
-    .input-label{
-        @apply text-xs text-slate-400;
-    }
+@layer components {
+   .input-box {
+      @apply w-full text-sm bg-transparent border-2 px-5 py-3 rounded mb-4 outline-none;
+   }
+   .primary-button {
+      @apply w-full text-sm bg-primary text-white p-2 rounded my-1 hover:bg-blue-600;
+   }
+   .icon-button {
+      @apply text-xl text-slate-300 cursor-pointer hover:text-primary;
+   }
+   .input-label {
+      @apply text-xs text-slate-400;
+   }
 }

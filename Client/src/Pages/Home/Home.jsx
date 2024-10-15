@@ -22,7 +22,6 @@ const Home = () => {
 
   const [notes, setNotes] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
-  const name = { ...userInfo };
 
   const navigate = useNavigate();
 
@@ -33,7 +32,7 @@ const Home = () => {
       type,
     });
   };
-  
+
   const handleCloseToast = () => {
     setToastMessage({
       isShown: false,
@@ -72,6 +71,28 @@ const Home = () => {
     }
   };
 
+  //Delete notes
+  const deleteNote = async (data) => {
+    const noteId = data._id;
+    console.log(noteId);
+    try {
+      const response = await axiosInstance.delete("/delete-note/" + noteId);
+
+      if (response.data && !response.data.error) {
+        showToastMessage(response.data.message, "delete");
+        getNotes();
+      }
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        console.log("An unexpected error ocurred. Please try again.");
+      }
+    }
+  };
+
   useEffect(() => {
     getNotes();
     getUserInfo();
@@ -80,7 +101,7 @@ const Home = () => {
 
   return (
     <main>
-      <NavBar userInfo={name.fullName} />
+      <NavBar userInfo={userInfo} />
 
       <section className="container mx-auto">
         <div className="grid grid-cols-3 gap-4 mt-8">
@@ -93,7 +114,7 @@ const Home = () => {
               tags={item.tags}
               isPinned={item.isPinned}
               onEdit={() => handleEditNotes(item)}
-              onDelete={() => {}}
+              onDelete={() => deleteNote(item)}
               onPinNote={() => {}}
             />
           ))}
