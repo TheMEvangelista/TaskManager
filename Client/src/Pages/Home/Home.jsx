@@ -100,11 +100,7 @@ const Home = () => {
 
   return (
     <main>
-<<<<<<< HEAD
-      <NavBar userInfo={userInfo} />
-=======
       <NavBar userInfo={userInfo.fullName} />
->>>>>>> 1a12ebd6260b24683896f606a46d643b6d46020e
 
       <section className="container mx-auto">
         <div className="grid grid-cols-3 gap-4 mt-8">
