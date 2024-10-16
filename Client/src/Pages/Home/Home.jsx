@@ -22,7 +22,8 @@ const Home = () => {
 
   const [notes, setNotes] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
-  const name = { ...userInfo };
+  console.log(userInfo);
+  // const name = { ...userInfo };
 
   const navigate = useNavigate();
 
@@ -33,7 +34,7 @@ const Home = () => {
       type,
     });
   };
-  
+
   const handleCloseToast = () => {
     setToastMessage({
       isShown: false,
@@ -54,7 +55,7 @@ const Home = () => {
       }
     } catch (error) {
       if (error.response?.status === 403) {
-        localStorage.clear();
+        localStorage.removeItem("userToken");
         navigate("/login");
       }
     }
@@ -75,12 +76,11 @@ const Home = () => {
   useEffect(() => {
     getNotes();
     getUserInfo();
-    return () => {};
   }, []);
 
   return (
     <main>
-      <NavBar userInfo={name.fullName} />
+      <NavBar userInfo={userInfo} />
 
       <section className="container mx-auto">
         <div className="grid grid-cols-3 gap-4 mt-8">
