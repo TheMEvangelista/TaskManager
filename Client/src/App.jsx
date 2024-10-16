@@ -5,17 +5,17 @@ import Login from "./Pages/Login/Login";
 import SignUp from "./Pages/SignUp/SignUp";
 
 const routes = (
-  <Router>
-    <Routes>
-      <Route path="/" exact element={<Home />} />
-      <Route path="/login" exact element={<Login />} />
-      <Route path="/signup" exact element={<SignUp />} />
-    </Routes>
-  </Router>
+   <Router>
+      <Routes>
+         <Route path="/" exact element={<Home />} />
+         <Route path="/login" exact element={<Login />} />
+         <Route path="/signup" exact element={<SignUp />} />
+      </Routes>
+   </Router>
 );
 
 const App = () => {
-  return <main>{routes}</main>;
+   return <main>{routes}</main>;
 };
 
 export default App;

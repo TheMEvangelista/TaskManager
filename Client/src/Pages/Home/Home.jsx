@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "../../Components/NavBar/NavBar";
 import NoteCard from "../../Components/Cards/NoteCard";
 import { MdAdd } from "react-icons/md";
@@ -69,7 +69,28 @@ const Home = () => {
         setNotes(response.data.notes);
       }
     } catch (error) {
-      console.log("An unexpected error ocurred. Please try again.");
+      console.log(error)
+    }
+  };
+
+  //Delete notes
+  const deleteNote = async (data) => {
+    const noteId = data._id;
+    try {
+      const response = await axiosInstance.delete("/delete-note/" + noteId);
+
+      if (response.data && !response.data.error) {
+        showToastMessage(response.data.message, "delete");
+        getNotes();
+      }
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        console.log("An unexpected error ocurred. Please try again.");
+      }
     }
   };
 
@@ -84,7 +105,7 @@ const Home = () => {
 
       <section className="container mx-auto">
         <div className="grid grid-cols-3 gap-4 mt-8">
-          {notes.map((item, index) => (
+          {notes.map((item) => (
             <NoteCard
               key={item._id}
               title={item.title}
@@ -93,7 +114,7 @@ const Home = () => {
               tags={item.tags}
               isPinned={item.isPinned}
               onEdit={() => handleEditNotes(item)}
-              onDelete={() => {}}
+              onDelete={() => deleteNote(item)}
               onPinNote={() => {}}
             />
           ))}
