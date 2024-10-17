@@ -23,7 +23,6 @@ const Home = () => {
   const [notes, setNotes] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
   console.log(userInfo);
-  // const name = { ...userInfo };
 
   const navigate = useNavigate();
 
