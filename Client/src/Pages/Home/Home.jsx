@@ -50,6 +50,7 @@ const Home = () => {
     try {
       const response = await axiosInstance.get("/get-user");
       if (response.data && response.data.user) {
+        console.log(response.data.user)
         setUserInfo(response.data.user);
       }
     } catch (error) {
