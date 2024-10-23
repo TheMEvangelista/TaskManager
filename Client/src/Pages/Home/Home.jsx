@@ -22,6 +22,7 @@ const Home = () => {
 
   const [notes, setNotes] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
+  console.log(userInfo);
 
   const navigate = useNavigate();
 
@@ -49,11 +50,12 @@ const Home = () => {
     try {
       const response = await axiosInstance.get("/get-user");
       if (response.data && response.data.user) {
+        console.log(response.data.user)
         setUserInfo(response.data.user);
       }
     } catch (error) {
       if (error.response?.status === 403) {
-        localStorage.clear();
+        localStorage.removeItem("userToken");
         navigate("/login");
       }
     }
@@ -95,12 +97,11 @@ const Home = () => {
   useEffect(() => {
     getNotes();
     getUserInfo();
-    return () => {};
-  }, [getUserInfo]);
+  }, []);
 
   return (
     <main>
-      <NavBar userInfo={userInfo.fullName} />
+      <NavBar userInfo={userInfo} />
 
       <section className="container mx-auto">
         <div className="grid grid-cols-3 gap-4 mt-8">
